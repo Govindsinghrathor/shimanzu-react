@@ -5,10 +5,13 @@ import { FaFacebookF, FaInstagram, FaTwitter, FaLinkedinIn } from 'react-icons/f
 import './Footer.css';
 import logoImg from '../assets/images/1712639794.png';
 
+import gifBg from '../assets/images/gif1-min.gif';
+
 const Footer = () => {
   return (
-    <footer className="footer">
-      <div className="container">
+    <footer className="footer" style={{ backgroundImage: `url(${gifBg})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', position: 'relative' }}>
+      <div style={{ position: 'absolute', inset: 0, backgroundColor: 'rgba(0,0,0,0.82)', zIndex: 0 }} />
+      <div className="container" style={{ position: 'relative', zIndex: 1 }}>
         <div className="footer-grid">
           {/* Brand Info */}
           <div className="footer-brand">

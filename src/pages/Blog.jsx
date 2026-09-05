@@ -2,26 +2,44 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Search, Folder, Calendar } from 'lucide-react';
 
-import blog1 from '../assets/images/1694428044.webp';
-import blog2 from '../assets/images/1694428268.webp';
+const blog1Img = 'https://images.unsplash.com/photo-1592982537447-7440770cbfc9?w=800';
+const blog2Img = 'https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=800';
+const blog3Img = 'https://images.unsplash.com/photo-1560493676-04071c5f467b?w=800';
+const blog4Img = 'https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=800';
 
 const Blog = () => {
   const blogs = [
     {
       id: 1,
-      title: "Excellence in Agrochemicals: How Japanese Tech Changes Farming",
-      desc: "Discover the incredible advancements in crop protection resulting from integration of new technologies.",
-      img: blog1,
+      title: "Shimanzu Chemicals: Pioneering Sustainable Agriculture",
+      desc: "Shimanzu Chemicals Private Limited has been at the forefront of agrochemical innovation, providing farmers with cutting-edge solutions that enhance crop productivity while maintaining environmental sustainability. Our commitment to research and development has led to breakthrough formulations that address the most challenging agricultural problems faced by farmers today.",
+      img: blog1Img,
       category: "Agriculture",
-      date: "Oct 15, 2025"
+      date: "Mar 15, 2024"
     },
     {
       id: 2,
-      title: "Managing Pests Effectively Before Harvest",
-      desc: "Learn the best practices to maintain a healthy crop output in the critical weeks before harvesting.",
-      img: blog2,
+      title: "The Role of Fungicides in Modern Crop Protection",
+      desc: "Fungal diseases are among the most devastating threats to agricultural productivity worldwide. At Shimanzu Chemicals, we have developed a comprehensive range of fungicide solutions that provide broad-spectrum protection against a wide variety of fungal pathogens. Our products are formulated using the latest Japanese technology to ensure maximum efficacy with minimal environmental impact.",
+      img: blog2Img,
+      category: "Crop Protection",
+      date: "Feb 28, 2024"
+    },
+    {
+      id: 3,
+      title: "Integrated Pest Management: A Holistic Approach",
+      desc: "Integrated Pest Management (IPM) represents a comprehensive approach to pest control that combines biological, cultural, physical, and chemical tools in a way that minimizes economic, health, and environmental risks. Shimanzu Chemicals supports IPM practices by offering targeted insecticide solutions that are effective against specific pests while preserving beneficial insects and the broader ecosystem.",
+      img: blog3Img,
       category: "Pesticides",
-      date: "Sep 28, 2025"
+      date: "Jan 20, 2024"
+    },
+    {
+      id: 4,
+      title: "Why Quality Agrochemicals Matter for Farmer Success",
+      desc: "The quality of agrochemical products directly impacts crop yield, farmer profitability, and long-term soil health. Shimanzu Chemicals Private Limited is committed to manufacturing and distributing only the highest quality agrochemical products. Every product undergoes rigorous quality control testing to ensure it meets international standards before reaching the hands of farmers across India and beyond.",
+      img: blog4Img,
+      category: "Farming Tech",
+      date: "Dec 10, 2023"
     }
   ];
 
@@ -107,9 +125,10 @@ const Blog = () => {
               <div style={{ background: 'var(--bg-card)', padding: '24px', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border-color)' }}>
                 <h4 className="h5" style={{ marginBottom: '16px', color: 'var(--text-primary)', borderBottom: '1px solid var(--border-color)', paddingBottom: '12px' }}>Categories</h4>
                 <ul style={{ listStyle: 'none', padding: 0 }}>
-                  <li style={{ marginBottom: '12px' }}><a href="#" style={{ color: 'var(--text-secondary)', display: 'flex', justifyContent: 'space-between' }} onMouseOver={e => e.target.style.color = 'var(--accent-gold)'} onMouseOut={e => e.target.style.color = 'var(--text-secondary)'}><span>Agriculture</span> <span>(12)</span></a></li>
-                  <li style={{ marginBottom: '12px' }}><a href="#" style={{ color: 'var(--text-secondary)', display: 'flex', justifyContent: 'space-between' }} onMouseOver={e => e.target.style.color = 'var(--accent-gold)'} onMouseOut={e => e.target.style.color = 'var(--text-secondary)'}><span>Farming Tech</span> <span>(8)</span></a></li>
-                  <li style={{ marginBottom: '12px' }}><a href="#" style={{ color: 'var(--text-secondary)', display: 'flex', justifyContent: 'space-between' }} onMouseOver={e => e.target.style.color = 'var(--accent-gold)'} onMouseOut={e => e.target.style.color = 'var(--text-secondary)'}><span>Pesticides</span> <span>(15)</span></a></li>
+                  <li style={{ marginBottom: '12px' }}><a href="#" style={{ color: 'var(--text-secondary)', display: 'flex', justifyContent: 'space-between' }} onMouseOver={e => e.target.style.color = 'var(--accent-gold)'} onMouseOut={e => e.target.style.color = 'var(--text-secondary)'}><span>Agriculture</span> <span>(2)</span></a></li>
+                  <li style={{ marginBottom: '12px' }}><a href="#" style={{ color: 'var(--text-secondary)', display: 'flex', justifyContent: 'space-between' }} onMouseOver={e => e.target.style.color = 'var(--accent-gold)'} onMouseOut={e => e.target.style.color = 'var(--text-secondary)'}><span>Crop Protection</span> <span>(1)</span></a></li>
+                  <li style={{ marginBottom: '12px' }}><a href="#" style={{ color: 'var(--text-secondary)', display: 'flex', justifyContent: 'space-between' }} onMouseOver={e => e.target.style.color = 'var(--accent-gold)'} onMouseOut={e => e.target.style.color = 'var(--text-secondary)'}><span>Pesticides</span> <span>(1)</span></a></li>
+                  <li style={{ marginBottom: '12px' }}><a href="#" style={{ color: 'var(--text-secondary)', display: 'flex', justifyContent: 'space-between' }} onMouseOver={e => e.target.style.color = 'var(--accent-gold)'} onMouseOut={e => e.target.style.color = 'var(--text-secondary)'}><span>Farming Tech</span> <span>(1)</span></a></li>
                 </ul>
               </div>
             </motion.div>

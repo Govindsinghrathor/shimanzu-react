@@ -1,21 +1,17 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-import img1 from '../assets/images/1713003050.webp';
-import img2 from '../assets/images/1713003056.webp';
-import img3 from '../assets/images/1713003063.webp';
-import img4 from '../assets/images/1694428044.webp';
-import img5 from '../assets/images/1694428114.webp';
-import img6 from '../assets/images/1694428214.webp';
-
 const Gallery = () => {
   const images = [
-    { id: 1, src: img1, title: "Farm Production" },
-    { id: 2, src: img2, title: "Agricultural Research" },
-    { id: 3, src: img3, title: "Tractor Operations" },
-    { id: 4, src: img4, title: "Crop Yields" },
-    { id: 5, src: img5, title: "Wheat Fields" },
-    { id: 6, src: img6, title: "Sustainable Farming" }
+    { id: 1, src: 'https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=800', title: "Tractor Farming" },
+    { id: 2, src: 'https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=800', title: "Crop Fields" },
+    { id: 3, src: 'https://images.unsplash.com/photo-1592982537447-7440770cbfc9?w=800', title: "Rice Plantation" },
+    { id: 4, src: 'https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=800', title: "Green Fields" },
+    { id: 5, src: 'https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=800', title: "Spraying Crops" },
+    { id: 6, src: 'https://images.unsplash.com/photo-1560493676-04071c5f467b?w=800', title: "Harvest Season" },
+    { id: 7, src: 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=800', title: "Sustainable Farming" },
+    { id: 8, src: 'https://images.unsplash.com/photo-1586771107445-d3ca888129ff?w=800', title: "Field Workers" },
+    { id: 9, src: 'https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?w=800', title: "Irrigation" },
   ];
 
   const containerVariants = {

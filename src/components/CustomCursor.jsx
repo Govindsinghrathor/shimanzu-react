@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import './CustomCursor.css';
 
 const CustomCursor = () => {
@@ -41,11 +42,12 @@ const CustomCursor = () => {
     };
   }, []);
 
-  return (
+  return createPortal(
     <>
       <div ref={dotRef} className="cursor-dot" />
       <div ref={ringRef} className="cursor-ring" />
-    </>
+    </>,
+    document.body
   );
 };
 
