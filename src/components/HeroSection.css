@@ -1,45 +1,123 @@
+/* ── Hero wrapper ── */
 .hero {
   height: 90vh;
   min-height: 600px;
   position: relative;
-  background-color: var(--bg-dark);
+  background: #0a1910;
   overflow: hidden;
 }
 
-.hero-slide-bg {
+.hero-stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* ── Layers ── */
+.hero-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.layer-active {
+  z-index: 1;
+  opacity: 1;
+}
+
+.layer-exit {
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+
+.layer-enter {
+  z-index: 2;
+  animation: layerFadeIn 0.8s ease forwards;
+}
+
+@keyframes layerFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── GIF layer ── */
+.hero-gif {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ── Image layer with Ken Burns ── */
+.hero-img-bg {
   width: 100%;
   height: 100%;
   background-size: cover;
   background-position: center;
-  background-attachment: fixed;
-  display: flex;
-  align-items: center;
+  background-repeat: no-repeat;
 }
 
+.kb-zoom-in      { animation: kbZoomIn     3s ease-out forwards; }
+.kb-pan-left     { animation: kbPanLeft    3s ease-in-out forwards; }
+.kb-pan-right    { animation: kbPanRight   3s ease-in-out forwards; }
+.kb-zoom-out     { animation: kbZoomOut    3s ease-out forwards; }
+.kb-zoom-in-left { animation: kbZoomInLeft 3s ease-out forwards; }
+.kb-zoom-in-right{ animation: kbZoomInRight 3s ease-out forwards; }
+
+@keyframes kbZoomIn      { from{transform:scale(1)}    to{transform:scale(1.1)}  }
+@keyframes kbPanLeft     { from{transform:scale(1.08) translateX(3%)} to{transform:scale(1.08) translateX(-3%)} }
+@keyframes kbPanRight    { from{transform:scale(1.08) translateX(-3%)} to{transform:scale(1.08) translateX(3%)} }
+@keyframes kbZoomOut     { from{transform:scale(1.12)} to{transform:scale(1)}    }
+@keyframes kbZoomInLeft  { from{transform:scale(1) translateX(0)}  to{transform:scale(1.1) translateX(-2%)} }
+@keyframes kbZoomInRight { from{transform:scale(1) translateX(0)}  to{transform:scale(1.1) translateX(2%)}  }
+
+/* ── Overlay ── */
 .hero-overlay {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   background: linear-gradient(
-    to right, 
-    rgba(10, 25, 16, 0.9) 0%, 
-    rgba(10, 25, 16, 0.6) 100%
+    105deg,
+    rgba(10, 25, 16, 0.82) 0%,
+    rgba(10, 25, 16, 0.35) 60%,
+    rgba(10, 25, 16, 0.15) 100%
   );
   z-index: 1;
 }
 
+/* ── Content ── */
+.hero-container {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+}
+
 .hero-content {
-  position: relative;
-  z-index: 2;
-  max-width: 800px;
+  max-width: 780px;
+  animation: contentUp 1s ease 0.2s both;
+}
+
+@keyframes contentUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+.hero-subtitle {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  letter-spacing: 4px;
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+  display: block;
 }
 
 .hero-title {
-  font-size: clamp(3rem, 5vw, 5rem);
+  font-size: clamp(2.4rem, 4.5vw, 4.8rem);
   color: var(--text-primary);
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
   line-height: 1.1;
 }
 
@@ -49,48 +127,36 @@
   -webkit-text-fill-color: transparent;
 }
 
-.hero-subtitle {
-  font-family: var(--font-sans);
-  font-size: 0.95rem;
-  letter-spacing: 4px;
-  color: var(--text-secondary);
-  margin-bottom: 2rem;
-  display: block;
-}
-
-.hero-desc {
-  font-size: 1.25rem;
-  color: var(--text-primary);
-  opacity: 0.9;
-  margin-bottom: 3rem;
-  max-width: 600px;
-}
-
 .hero-actions {
   display: flex;
   gap: 1.5rem;
 }
 
-.hero-swiper .swiper-pagination-bullet {
-  background: #fff;
-  opacity: 0.5;
-  width: 12px;
-  height: 12px;
-  transition: all 0.3s ease;
+/* ── Progress bar (30s loop) ── */
+.hero-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: rgba(255,255,255,0.1);
+  z-index: 10;
 }
 
-.hero-swiper .swiper-pagination-bullet-active {
+.hero-progress-bar {
+  height: 100%;
   background: var(--accent-gold);
-  opacity: 1;
-  width: 32px;
-  border-radius: 6px;
+  animation: progressRun linear infinite;
+  transform-origin: left;
 }
 
+@keyframes progressRun {
+  from { width: 0%; }
+  to   { width: 100%; }
+}
+
+/* ── Responsive ── */
 @media (max-width: 640px) {
-  .hero-actions {
-    flex-direction: column;
-  }
-  .hero-title {
-    font-size: 2.5rem;
-  }
+  .hero-actions { flex-direction: column; }
+  .hero-title   { font-size: 2rem; }
 }

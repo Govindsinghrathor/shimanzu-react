@@ -1,43 +1,43 @@
-/* Crops.css - Matching Image 3, Image 4, and Image 5 */
+/* Crops.css — Dark theme matching website */
 
 .fmc-crops-page {
-  background-color: #f8fafc;
+  background-color: var(--bg-dark);
   min-height: 100vh;
-  color: #1e293b;
+  color: var(--text-primary);
 }
 
-/* 1. Hero Section matching Image 3 */
+/* Hero Section */
 .crops-hero-section {
   position: relative;
-  background: linear-gradient(180deg, rgba(15, 32, 21, 0.85) 0%, rgba(10, 25, 16, 0.95) 100%),
+  background: linear-gradient(180deg, rgba(5, 13, 8, 0.7) 0%, rgba(10, 25, 16, 0.95) 100%),
               url('https://images.unsplash.com/photo-1500651230702-0e2d8a49d4ad?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
   padding: 80px 0 60px;
-  border-bottom: 1px solid #e2e8f0;
-  color: #ffffff;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .crops-hero-title {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: var(--font-serif);
   font-size: 3rem;
-  font-weight: 900;
+  font-weight: 700;
   letter-spacing: -1px;
   text-transform: uppercase;
   margin: 0 0 12px 0;
-  color: #ffffff;
+  color: var(--text-primary);
 }
 
 .crops-hero-subtitle {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  font-size: 1.05rem;
-  color: #cbd5e1;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  color: var(--text-secondary);
   max-width: 650px;
-  line-height: 1.5;
+  line-height: 1.6;
   margin: 0;
 }
 
-/* 2. Crop Selection Intro matching Image 3 */
+/* Crop Selection Section */
 .crop-selection-section {
   padding: 50px 0 80px;
+  background-color: var(--bg-dark);
 }
 
 .crop-selection-header {
@@ -45,7 +45,7 @@
   gap: 40px;
   align-items: flex-start;
   padding-bottom: 24px;
-  border-bottom: 1px solid #cbd5e1;
+  border-bottom: 1px solid var(--border-color);
   margin-bottom: 36px;
 }
 
@@ -64,98 +64,99 @@
 }
 
 .crop-selection-bar {
-  width: 5px;
+  width: 4px;
   height: 28px;
-  background-color: #1e293b;
+  background-color: var(--accent-gold);
   border-radius: 2px;
 }
 
 .crop-selection-title {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: var(--font-serif);
   font-size: 1.6rem;
-  font-weight: 800;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: -0.5px;
-  color: #1e293b;
+  color: var(--text-primary);
   margin: 0;
+  white-space: nowrap;
 }
 
 .crop-selection-text {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  font-size: 0.92rem;
-  color: #475569;
-  line-height: 1.65;
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
   margin: 0;
 }
 
-/* 3. Crop Cards 3-Column Grid matching Image 3 & 4 */
+/* Crop Cards Grid */
 .crop-cards-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  gap: 16px;
 }
 
 @media (max-width: 1024px) {
-  .crop-cards-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  .crop-cards-grid { grid-template-columns: repeat(2, 1fr); }
 }
-
 @media (max-width: 640px) {
-  .crop-cards-grid {
-    grid-template-columns: 1fr;
-  }
+  .crop-cards-grid { grid-template-columns: 1fr; }
 }
 
 .crop-card {
   display: flex;
   align-items: center;
   gap: 16px;
-  background-color: #ffffff;
+  background-color: var(--bg-card);
   padding: 16px 20px;
-  border-radius: 4px;
-  border: 1px solid #e2e8f0;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
 .crop-card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-  border-color: #cbd5e1;
+  box-shadow: var(--shadow-card);
+  border-color: var(--border-highlight);
 }
 
 .crop-card.active {
-  box-shadow: 0 0 0 2px #d32f2f, 0 8px 20px rgba(211, 47, 47, 0.15);
+  border-color: var(--accent-gold);
+  box-shadow: 0 0 0 1px var(--accent-gold), var(--shadow-gold);
 }
 
 .crop-circle-thumb {
-  width: 58px;
-  height: 58px;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
   object-fit: cover;
   flex-shrink: 0;
-  border: 1px solid #e2e8f0;
+  border: 2px solid var(--border-color);
+  opacity: 0.9;
+}
+
+.crop-card:hover .crop-circle-thumb {
+  opacity: 1;
+  border-color: var(--accent-gold);
 }
 
 .crop-card-name {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  font-size: 1rem;
-  font-weight: 700;
-  color: #d32f2f; /* Bold red crop name matching Image 3 & 4 */
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--accent-gold);
   margin: 0;
   transition: color 0.2s;
 }
 
 .crop-card:hover .crop-card-name {
-  color: #b71c1c;
+  color: var(--accent-gold-light);
 }
 
-/* 4. Single Crop Selected View matching Image 5 */
+/* Crop Detail Header */
 .crop-detail-header-section {
-  background-color: #ffffff;
-  border-bottom: 1px solid #e2e8f0;
+  background-color: var(--bg-darker);
+  border-bottom: 1px solid var(--border-color);
   padding: 40px 0 28px;
 }
 
@@ -167,32 +168,111 @@
 }
 
 .crop-detail-title {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: var(--font-serif);
   font-size: 2.2rem;
   font-weight: 700;
-  color: #1e293b;
-  margin: 0 0 8px 0;
+  color: var(--text-primary);
+  margin: 0;
 }
 
 .crop-detail-description {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.95rem;
-  color: #475569;
+  color: var(--text-secondary);
   line-height: 1.6;
   max-width: 900px;
   margin: 0;
 }
 
-/* Relevant Products Section matching Image 5 */
+/* Relevant Products */
 .crop-relevant-products-section {
   padding: 36px 0 70px;
+  background-color: var(--bg-dark);
 }
 
 .crop-relevant-title {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: var(--font-serif);
   font-size: 1.5rem;
-  font-weight: 800;
+  font-weight: 700;
   text-transform: uppercase;
-  color: #1e293b;
+  color: var(--text-primary);
   margin: 0 0 24px 0;
+}
+
+/* Reuse from Products.css */
+.fmc-layout-columns {
+  display: flex;
+  gap: 32px;
+  align-items: flex-start;
+}
+
+@media (max-width: 900px) {
+  .fmc-layout-columns { flex-direction: column; }
+}
+
+.fmc-results-area {
+  flex: 1;
+  min-width: 0;
+}
+
+.fmc-results-counter {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.fmc-grid-3col {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+@media (max-width: 1100px) {
+  .fmc-grid-3col { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .fmc-grid-3col { grid-template-columns: 1fr; }
+}
+
+.fmc-empty-box {
+  background-color: var(--bg-card);
+  border: 1px dashed var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 60px 24px;
+  text-align: center;
+  color: var(--text-secondary);
+}
+
+.fmc-empty-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.fmc-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--accent-gold);
+  background: transparent;
+  border: 1px solid var(--accent-gold);
+  padding: 6px 14px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.fmc-back-btn:hover {
+  background-color: var(--accent-gold);
+  color: var(--bg-dark);
 }

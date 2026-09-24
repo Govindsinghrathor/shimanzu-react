@@ -1,10 +1,9 @@
-/* ProductCategoriesGrid.css */
+/* ProductCategoriesGrid.css — Dark theme matching website */
 
 .categories-section {
-  padding: 60px 0 40px;
-  background-color: #f8fafc; /* Crisp light backdrop like the reference screenshot */
-  color: #1e293b;
-  position: relative;
+  padding: 60px 0 60px;
+  background-color: var(--bg-dark);
+  color: var(--text-primary);
 }
 
 .categories-container {
@@ -13,32 +12,32 @@
   padding: 0 24px;
 }
 
-/* Header Section matching screenshot */
+/* Header */
 .categories-header {
   display: flex;
   align-items: baseline;
   gap: 20px;
-  margin-bottom: 32px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid #cbd5e1;
-  position: relative;
+  margin-bottom: 36px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .categories-main-title {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: var(--font-serif);
   font-size: 2.2rem;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: -0.5px;
   text-transform: uppercase;
-  color: #1e293b;
+  color: var(--text-primary);
   margin: 0;
   line-height: 1;
+  white-space: nowrap;
 }
 
 .categories-subtitle {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.95rem;
-  color: #64748b;
+  color: var(--text-secondary);
   font-weight: 400;
   white-space: nowrap;
 }
@@ -47,19 +46,17 @@
   flex-grow: 1;
 }
 
-/* 2-Column Responsive Grid */
+/* 2-Column Grid */
 .categories-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 28px 24px;
+  gap: 20px;
 }
 
 @media (max-width: 900px) {
   .categories-grid {
     grid-template-columns: 1fr;
-    gap: 20px;
   }
-  
   .categories-header {
     flex-direction: column;
     align-items: flex-start;
@@ -70,11 +67,10 @@
 /* Category Card */
 .category-card {
   display: flex;
-  background-color: #ffffff;
-  border-radius: 4px;
+  background-color: var(--bg-card);
+  border-radius: var(--radius-md);
   overflow: hidden;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--border-color);
   cursor: pointer;
   position: relative;
   transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
@@ -83,76 +79,74 @@
 
 .category-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
-  border-color: #cbd5e1;
+  box-shadow: var(--shadow-card);
+  border-color: var(--border-highlight);
 }
 
-/* Active Category Selected State */
 .category-card.is-active {
-  box-shadow: 0 0 0 2px #d32f2f, 0 12px 28px rgba(211, 47, 47, 0.15);
+  border-color: var(--accent-gold);
+  box-shadow: 0 0 0 1px var(--accent-gold), var(--shadow-gold);
 }
 
-/* Left Vertical Color Accent Strip */
+/* Left stripe */
 .category-stripe {
-  width: 8px;
+  width: 5px;
   flex-shrink: 0;
 }
 
-/* Image Container (Left side) - Proportional clean width */
+/* Image */
 .category-image-wrap {
   width: 185px;
   min-width: 185px;
-  max-width: 185px;
   flex-shrink: 0;
-  position: relative;
   overflow: hidden;
-  background-color: #f1f5f9;
+  background-color: var(--bg-darker);
 }
 
 .category-card-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center center;
+  object-position: center;
   transition: transform 0.4s ease;
+  opacity: 0.85;
 }
 
 .category-card:hover .category-card-img {
   transform: scale(1.06);
+  opacity: 1;
 }
 
-/* Content Area (Right side) */
+/* Content */
 .category-content {
   flex: 1;
-  padding: 18px 20px 16px 20px;
+  padding: 18px 20px 16px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background-color: #ffffff;
   min-width: 0;
 }
 
 .category-title {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  font-size: 1.15rem;
-  font-weight: 800;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: #d32f2f; /* Bold Red/Crimson exactly like screenshot */
+  letter-spacing: 1px;
+  color: var(--accent-gold);
   margin: 0 0 10px 0;
   line-height: 1.25;
-  transition: color 0.2s ease;
 }
 
 .category-card:hover .category-title {
-  color: #b71c1c;
+  color: var(--accent-gold-light);
 }
 
 .category-description {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.84rem;
-  line-height: 1.5;
-  color: #4b5563;
+  line-height: 1.55;
+  color: var(--text-secondary);
   margin: 0 0 10px 0;
   display: -webkit-box;
   -webkit-line-clamp: 3;
@@ -160,53 +154,49 @@
   overflow: hidden;
 }
 
-/* Footer of the Card */
+/* Footer */
 .category-card-footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-top: auto;
-  padding-top: 6px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border-color);
 }
 
 .category-item-count {
-  font-size: 0.76rem;
+  font-size: 0.72rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: #64748b;
-  background: #f1f5f9;
-  padding: 3px 8px;
-  border-radius: 4px;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  background: rgba(255,255,255,0.05);
+  padding: 3px 10px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
 }
 
-/* Red Circular Arrow Button */
+/* Arrow button */
 .category-arrow-btn {
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  border: 1.8px solid #d32f2f;
-  color: #d32f2f;
+  border: 1.5px solid var(--accent-gold);
+  color: var(--accent-gold);
   background: transparent;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  margin-left: auto;
+  transition: all 0.25s ease;
 }
 
 .category-card:hover .category-arrow-btn {
-  background-color: #d32f2f;
-  color: #ffffff;
+  background-color: var(--accent-gold);
+  color: var(--bg-dark);
   transform: scale(1.1);
 }
 
 .category-arrow-btn svg {
   width: 14px;
   height: 14px;
-  transition: transform 0.2s ease;
-}
-
-.category-card:hover .category-arrow-btn svg {
-  transform: translateX(1px);
 }

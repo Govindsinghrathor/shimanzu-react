@@ -1,15 +1,15 @@
-/* Products.css - FMC Style matching Image 2 and Image 5 */
+/* Products.css — Dark theme matching website */
 
 .fmc-products-page {
-  background-color: #f8fafc;
+  background-color: var(--bg-dark);
   min-height: 100vh;
-  color: #1e293b;
+  color: var(--text-primary);
 }
 
-/* Category Selected View Header matching Image 2 */
+/* Category Selected Header */
 .fmc-type-header-section {
-  background-color: #ffffff;
-  border-bottom: 1px solid #e2e8f0;
+  background-color: var(--bg-darker);
+  border-bottom: 1px solid var(--border-color);
   padding: 40px 0 28px;
 }
 
@@ -28,18 +28,18 @@
 }
 
 .fmc-product-type-label {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.72rem;
-  font-weight: 800;
-  letter-spacing: 1.5px;
+  font-weight: 700;
+  letter-spacing: 2px;
   text-transform: uppercase;
-  color: #64748b;
+  color: var(--text-muted);
   white-space: nowrap;
 }
 
 .fmc-product-type-line {
   height: 1px;
-  background-color: #cbd5e1;
+  background-color: var(--border-color);
   flex: 1;
 }
 
@@ -48,12 +48,12 @@
   align-items: center;
   gap: 6px;
   font-size: 0.82rem;
-  font-weight: 700;
-  color: #d32f2f;
+  font-weight: 600;
+  color: var(--accent-gold);
   background: transparent;
-  border: 1px solid #d32f2f;
+  border: 1px solid var(--accent-gold);
   padding: 6px 14px;
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
   transition: all 0.2s ease;
   white-space: nowrap;
@@ -61,29 +61,29 @@
 }
 
 .fmc-back-btn:hover {
-  background-color: #d32f2f;
-  color: #ffffff;
+  background-color: var(--accent-gold);
+  color: var(--bg-dark);
 }
 
 .fmc-type-title {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: var(--font-serif);
   font-size: 2.2rem;
   font-weight: 700;
-  color: #1e293b;
+  color: var(--text-primary);
   margin: 0 0 8px 0;
   line-height: 1.2;
 }
 
 .fmc-type-subtitle {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.95rem;
-  color: #64748b;
+  color: var(--text-secondary);
   margin: 0;
   max-width: 900px;
   line-height: 1.5;
 }
 
-/* Two-column layout: Sidebar + Results Grid */
+/* Two-column layout */
 .fmc-main-layout {
   padding: 36px 0 70px;
 }
@@ -106,21 +106,21 @@
 }
 
 .fmc-results-counter {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  font-size: 0.75rem;
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
   font-weight: 700;
-  letter-spacing: 1px;
+  letter-spacing: 1.5px;
   text-transform: uppercase;
-  color: #64748b;
+  color: var(--text-muted);
   margin-bottom: 20px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .fmc-grid-3col {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 22px;
+  gap: 20px;
 }
 
 @media (max-width: 1100px) {
@@ -137,17 +137,17 @@
 
 /* Empty State */
 .fmc-empty-box {
-  background-color: #ffffff;
-  border: 1px dashed #cbd5e1;
-  border-radius: 4px;
+  background-color: var(--bg-card);
+  border: 1px dashed var(--border-color);
+  border-radius: var(--radius-md);
   padding: 60px 24px;
   text-align: center;
-  color: #64748b;
+  color: var(--text-secondary);
 }
 
 .fmc-empty-title {
   font-size: 1.2rem;
   font-weight: 700;
-  color: #1e293b;
+  color: var(--text-primary);
   margin-bottom: 8px;
 }

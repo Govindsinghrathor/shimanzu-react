@@ -100,7 +100,7 @@ const LoadingScreen = () => {
               alt="Shimanzu"
               style={{ width: '180px', filter: 'brightness(0) invert(1)' }}
               animate={{ filter: ['brightness(0) invert(1)', 'brightness(0.9) invert(1) sepia(0.3)', 'brightness(0) invert(1)'] }}
-              transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+                transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
             />
           </motion.div>
 
