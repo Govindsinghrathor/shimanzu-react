@@ -1,41 +1,252 @@
+/* ImpactCounters.css - Modern Luxury Agrochemical Impact Showcase */
+
 .impact-section {
-  background-color: var(--bg-darker);
-  border-top: 1px solid var(--border-highlight);
-  border-bottom: 1px solid var(--border-color);
+  position: relative;
+  padding: 90px 0 95px;
+  background: linear-gradient(180deg, #050f09 0%, #091a10 50%, #040c07 100%);
+  border-top: 1px solid rgba(212, 175, 55, 0.2);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+  overflow: hidden;
 }
 
+/* Ambient Radial Glows */
+.impact-bg-glow {
+  position: absolute;
+  width: 550px;
+  height: 550px;
+  border-radius: 50%;
+  filter: blur(120px);
+  pointer-events: none;
+  opacity: 0.25;
+  z-index: 1;
+}
+
+.impact-glow-left {
+  top: -100px;
+  left: -150px;
+  background: radial-gradient(circle, #10b981 0%, transparent 70%);
+}
+
+.impact-glow-right {
+  bottom: -120px;
+  right: -150px;
+  background: radial-gradient(circle, #d4af37 0%, transparent 70%);
+}
+
+.impact-container {
+  position: relative;
+  z-index: 2;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* Header */
+.impact-header {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto 56px;
+}
+
+.impact-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 18px;
+  border-radius: 9999px;
+  background: rgba(212, 175, 55, 0.1);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  color: var(--accent-gold-light);
+  font-family: var(--font-sans);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.15);
+}
+
+.impact-badge-icon {
+  color: var(--accent-gold);
+  animation: pulseGold 2.5s infinite ease-in-out;
+}
+
+@keyframes pulseGold {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.15); opacity: 1; filter: drop-shadow(0 0 6px rgba(212, 175, 55, 0.8)); }
+}
+
+.impact-heading {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 3.2vw, 2.75rem);
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.25;
+  margin-bottom: 14px;
+  letter-spacing: -0.5px;
+}
+
+.impact-subheading {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  color: #94a3b8;
+  line-height: 1.65;
+  margin: 0;
+}
+
+/* 4-Card Responsive Grid */
 .impact-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 2rem;
-  text-align: center;
+  gap: 24px;
 }
 
-@media (max-width: 768px) {
-  .impact-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 3rem;
-  }
-}
-
-.impact-item {
+/* Individual Stat Card */
+.impact-card {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
+  text-align: center;
+  padding: 38px 22px 32px;
+  border-radius: 18px;
+  background: linear-gradient(160deg, rgba(18, 38, 26, 0.7) 0%, rgba(9, 21, 14, 0.85) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 12px 35px -8px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.35s ease;
+  overflow: hidden;
+}
+
+/* Top Subtle Gold Accent Line */
+.impact-card-topline {
+  position: absolute;
+  top: 0;
+  left: 20%;
+  right: 20%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.8), transparent);
+  transition: left 0.4s ease, right 0.4s ease, background 0.4s ease;
+}
+
+.impact-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(212, 175, 55, 0.45);
+  box-shadow: 0 22px 45px -10px rgba(0, 0, 0, 0.7),
+              0 0 25px rgba(16, 185, 129, 0.2),
+              inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.impact-card:hover .impact-card-topline {
+  left: 8%;
+  right: 8%;
+  background: linear-gradient(90deg, transparent, #e6c863, transparent);
+}
+
+/* Glowing Icon Orb */
+.impact-icon-orb {
+  width: 62px;
+  height: 62px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.18), rgba(212, 175, 55, 0.12));
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  color: var(--accent-gold);
+  margin-bottom: 22px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3), inset 0 0 14px rgba(16, 185, 129, 0.15);
+  transition: transform 0.35s ease, color 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+}
+
+.impact-card:hover .impact-icon-orb {
+  transform: scale(1.1) rotate(4deg);
+  color: #fce184;
+  border-color: rgba(212, 175, 55, 0.7);
+  box-shadow: 0 10px 25px rgba(212, 175, 55, 0.3), inset 0 0 16px rgba(16, 185, 129, 0.3);
+}
+
+/* Numbers & Plus */
+.impact-value-wrap {
+  display: inline-flex;
+  align-items: baseline;
+  justify-content: center;
+  margin-bottom: 8px;
 }
 
 .impact-number {
-  font-size: clamp(3rem, 5vw, 4.5rem);
-  color: var(--accent-gold);
+  font-family: var(--font-serif);
+  font-size: clamp(2.4rem, 3.4vw, 3.1rem);
+  font-weight: 700;
   line-height: 1;
-  text-shadow: var(--shadow-gold);
+  letter-spacing: -1px;
+  background: linear-gradient(135deg, #ffffff 40%, #e6c863 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 10px rgba(212, 175, 55, 0.25));
 }
 
+.impact-suffix {
+  font-family: var(--font-serif);
+  font-size: clamp(1.8rem, 2.6vw, 2.3rem);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--accent-gold);
+  margin-left: 2px;
+  text-shadow: 0 0 14px rgba(212, 175, 55, 0.5);
+}
+
+/* Title / Label */
 .impact-label {
   font-family: var(--font-sans);
-  font-size: 0.9rem;
-  font-weight: 600;
-  letter-spacing: 2px;
-  color: var(--text-secondary);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #f8fafc;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  margin: 0 0 10px 0;
+  line-height: 1.3;
+}
+
+/* Description Subtext */
+.impact-desc {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  color: #94a3b8;
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 1024px) {
+  .impact-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  
+  .impact-section {
+    padding: 75px 0 80px;
+  }
+}
+
+@media (max-width: 640px) {
+  .impact-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .impact-section {
+    padding: 60px 0 65px;
+  }
+
+  .impact-card {
+    padding: 30px 20px 26px;
+  }
+
+  .impact-header {
+    margin-bottom: 40px;
+  }
 }
