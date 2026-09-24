@@ -1,0 +1,198 @@
+/* Crops.css - Matching Image 3, Image 4, and Image 5 */
+
+.fmc-crops-page {
+  background-color: #f8fafc;
+  min-height: 100vh;
+  color: #1e293b;
+}
+
+/* 1. Hero Section matching Image 3 */
+.crops-hero-section {
+  position: relative;
+  background: linear-gradient(180deg, rgba(15, 32, 21, 0.85) 0%, rgba(10, 25, 16, 0.95) 100%),
+              url('https://images.unsplash.com/photo-1500651230702-0e2d8a49d4ad?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+  padding: 80px 0 60px;
+  border-bottom: 1px solid #e2e8f0;
+  color: #ffffff;
+}
+
+.crops-hero-title {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-size: 3rem;
+  font-weight: 900;
+  letter-spacing: -1px;
+  text-transform: uppercase;
+  margin: 0 0 12px 0;
+  color: #ffffff;
+}
+
+.crops-hero-subtitle {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-size: 1.05rem;
+  color: #cbd5e1;
+  max-width: 650px;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* 2. Crop Selection Intro matching Image 3 */
+.crop-selection-section {
+  padding: 50px 0 80px;
+}
+
+.crop-selection-header {
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #cbd5e1;
+  margin-bottom: 36px;
+}
+
+@media (max-width: 900px) {
+  .crop-selection-header {
+    flex-direction: column;
+    gap: 16px;
+  }
+}
+
+.crop-selection-heading-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.crop-selection-bar {
+  width: 5px;
+  height: 28px;
+  background-color: #1e293b;
+  border-radius: 2px;
+}
+
+.crop-selection-title {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-size: 1.6rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.5px;
+  color: #1e293b;
+  margin: 0;
+}
+
+.crop-selection-text {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-size: 0.92rem;
+  color: #475569;
+  line-height: 1.65;
+  margin: 0;
+}
+
+/* 3. Crop Cards 3-Column Grid matching Image 3 & 4 */
+.crop-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+@media (max-width: 1024px) {
+  .crop-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .crop-cards-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.crop-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background-color: #ffffff;
+  padding: 16px 20px;
+  border-radius: 4px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.crop-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  border-color: #cbd5e1;
+}
+
+.crop-card.active {
+  box-shadow: 0 0 0 2px #d32f2f, 0 8px 20px rgba(211, 47, 47, 0.15);
+}
+
+.crop-circle-thumb {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 1px solid #e2e8f0;
+}
+
+.crop-card-name {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #d32f2f; /* Bold red crop name matching Image 3 & 4 */
+  margin: 0;
+  transition: color 0.2s;
+}
+
+.crop-card:hover .crop-card-name {
+  color: #b71c1c;
+}
+
+/* 4. Single Crop Selected View matching Image 5 */
+.crop-detail-header-section {
+  background-color: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+  padding: 40px 0 28px;
+}
+
+.crop-detail-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.crop-detail-title {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 8px 0;
+}
+
+.crop-detail-description {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-size: 0.95rem;
+  color: #475569;
+  line-height: 1.6;
+  max-width: 900px;
+  margin: 0;
+}
+
+/* Relevant Products Section matching Image 5 */
+.crop-relevant-products-section {
+  padding: 36px 0 70px;
+}
+
+.crop-relevant-title {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-size: 1.5rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #1e293b;
+  margin: 0 0 24px 0;
+}

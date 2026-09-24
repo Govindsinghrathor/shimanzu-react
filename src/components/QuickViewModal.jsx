@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, CheckCircle2, MessageCircle } from 'lucide-react';
+import { X, CheckCircle2, MessageCircle, AlertCircle, Sparkles } from 'lucide-react';
 import './QuickViewModal.css';
 
 const QuickViewModal = ({ product, onClose }) => {
@@ -8,14 +8,18 @@ const QuickViewModal = ({ product, onClose }) => {
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content animate-fade-in-up" onClick={e => e.stopPropagation()}>
-        <button className="modal-close" onClick={onClose}>
+        <button className="modal-close" onClick={onClose} aria-label="Close modal">
           <X size={24} />
         </button>
         
         <div className="modal-grid">
           <div className="modal-image-col">
             {product.imgSrc ? (
-              <img src={product.imgSrc} alt={product.name} style={{ maxWidth: '80%', maxHeight: '80%', objectFit: 'contain' }} />
+              <img 
+                src={product.imgSrc} 
+                alt={product.name} 
+                style={{ maxWidth: '85%', maxHeight: '85%', objectFit: 'contain', filter: 'drop-shadow(0 12px 24px rgba(0,0,0,0.5))' }} 
+              />
             ) : (
               <div className="modal-image-placeholder">
                 <span className="modal-formulation">{product.formulation}</span>
@@ -25,9 +29,12 @@ const QuickViewModal = ({ product, onClose }) => {
           
           <div className="modal-info-col">
             <div className="modal-badges">
-              <span className="badge category-badge">{product.category}</span>
+              <span className="badge category-badge">{product.categoryLabel || product.category}</span>
               <span className={`badge stock-badge ${product.inStock ? 'in-stock' : 'low-stock'}`}>
-                {product.inStock ? 'In Stock' : 'Low Stock'}
+                {product.inStock ? 'In Stock' : 'Available on Request'}
+              </span>
+              <span className="badge" style={{ background: 'rgba(212,175,55,0.15)', color: 'var(--accent-gold)', border: '1px solid rgba(212,175,55,0.4)' }}>
+                {product.formulation}
               </span>
             </div>
             
@@ -37,36 +44,57 @@ const QuickViewModal = ({ product, onClose }) => {
             <div className="modal-details">
               <div className="detail-row">
                 <span className="detail-label">Pack Sizes:</span>
-                <span className="detail-value">{product.packSizes.join(', ')}</span>
+                <span className="detail-value">{product.packSizes ? product.packSizes.join(', ') : 'Standard'}</span>
               </div>
-              <div className="detail-row">
-                <span className="detail-label">Target Crops:</span>
-                <span className="detail-value">
-                  {product.crops.map((crop, idx) => (
-                    <span key={idx} className="crop-tag-modal">{crop}</span>
-                  ))}
-                </span>
-              </div>
+
+              {product.dosage && (
+                <div className="detail-row">
+                  <span className="detail-label">Recommended Dosage:</span>
+                  <span className="detail-value" style={{ color: 'var(--accent-gold)' }}>{product.dosage}</span>
+                </div>
+              )}
+
+              {product.targets && (
+                <div className="detail-row">
+                  <span className="detail-label">Target Pests / Diseases:</span>
+                  <span className="detail-value">{product.targets}</span>
+                </div>
+              )}
+
+              {product.crops && product.crops.length > 0 && (
+                <div className="detail-row">
+                  <span className="detail-label">Target Crops:</span>
+                  <span className="detail-value">
+                    {product.crops.map((crop, idx) => (
+                      <span key={idx} className="crop-tag-modal">{crop}</span>
+                    ))}
+                  </span>
+                </div>
+              )}
             </div>
             
             <div className="modal-description">
-              <h4 className="description-title">Product Overview</h4>
+              <h4 className="description-title">Product Overview & Efficacy</h4>
               <p className="description-text">
-                This is a premium {product.category.toLowerCase()} formulated as a {product.formulation} 
-                specifically designed to provide superior protection and yield enhancement for your crops.
-                It features excellent rainfastness and systemic activity.
+                {product.description || `High-potency ${product.categoryLabel || product.category} formulated to provide superior protection, vigorous vegetative growth, and maximum crop harvest yield.`}
               </p>
               
               <ul className="benefits-list">
-                <li><CheckCircle2 size={16} className="text-emerald" /> Broad-spectrum control</li>
-                <li><CheckCircle2 size={16} className="text-emerald" /> High efficacy at low doses</li>
-                <li><CheckCircle2 size={16} className="text-emerald" /> Environmentally conscious formulation</li>
+                <li><CheckCircle2 size={16} className="text-emerald" /> High bio-availability with superior rainfastness</li>
+                <li><CheckCircle2 size={16} className="text-emerald" /> Stringent ISO-certified quality manufacturing standards</li>
+                <li><CheckCircle2 size={16} className="text-emerald" /> Low environmental footprint and high crop selectivity</li>
               </ul>
             </div>
             
             <div className="modal-actions">
-              <a href={`https://wa.me/1234567890?text=I am interested in ${product.name}`} target="_blank" rel="noreferrer" className="btn btn-gold w-full">
-                <MessageCircle size={18} style={{ marginRight: '8px' }} /> Inquire on WhatsApp
+              <a 
+                href={`https://wa.me/919999999999?text=Hello%20Shimanzu,%20I%20am%20interested%20in%20purchasing%20or%20distributing%20${encodeURIComponent(product.name)}%20(${encodeURIComponent(product.chemical)})`} 
+                target="_blank" 
+                rel="noreferrer" 
+                className="btn btn-gold w-full"
+                style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}
+              >
+                <MessageCircle size={18} /> Inquire / Order on WhatsApp
               </a>
             </div>
           </div>

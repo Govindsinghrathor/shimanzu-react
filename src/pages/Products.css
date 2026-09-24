@@ -1,0 +1,153 @@
+/* Products.css - FMC Style matching Image 2 and Image 5 */
+
+.fmc-products-page {
+  background-color: #f8fafc;
+  min-height: 100vh;
+  color: #1e293b;
+}
+
+/* Category Selected View Header matching Image 2 */
+.fmc-type-header-section {
+  background-color: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+  padding: 40px 0 28px;
+}
+
+.fmc-type-nav-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.fmc-product-type-label-wrap {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 1;
+}
+
+.fmc-product-type-label {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #64748b;
+  white-space: nowrap;
+}
+
+.fmc-product-type-line {
+  height: 1px;
+  background-color: #cbd5e1;
+  flex: 1;
+}
+
+.fmc-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #d32f2f;
+  background: transparent;
+  border: 1px solid #d32f2f;
+  padding: 6px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  margin-left: 16px;
+}
+
+.fmc-back-btn:hover {
+  background-color: #d32f2f;
+  color: #ffffff;
+}
+
+.fmc-type-title {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 8px 0;
+  line-height: 1.2;
+}
+
+.fmc-type-subtitle {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-size: 0.95rem;
+  color: #64748b;
+  margin: 0;
+  max-width: 900px;
+  line-height: 1.5;
+}
+
+/* Two-column layout: Sidebar + Results Grid */
+.fmc-main-layout {
+  padding: 36px 0 70px;
+}
+
+.fmc-layout-columns {
+  display: flex;
+  gap: 32px;
+  align-items: flex-start;
+}
+
+@media (max-width: 900px) {
+  .fmc-layout-columns {
+    flex-direction: column;
+  }
+}
+
+.fmc-results-area {
+  flex: 1;
+  min-width: 0;
+}
+
+.fmc-results-counter {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #64748b;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.fmc-grid-3col {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+
+@media (max-width: 1100px) {
+  .fmc-grid-3col {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .fmc-grid-3col {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Empty State */
+.fmc-empty-box {
+  background-color: #ffffff;
+  border: 1px dashed #cbd5e1;
+  border-radius: 4px;
+  padding: 60px 24px;
+  text-align: center;
+  color: #64748b;
+}
+
+.fmc-empty-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 8px;
+}

@@ -1,10 +1,22 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useMemo } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import HeroSection from '../components/HeroSection';
 import ImpactCounters from '../components/ImpactCounters';
 import CategoryMarquee from '../components/CategoryMarquee';
-import { ArrowRight, ShieldCheck, Leaf, FlaskConical, Globe, Award, Users } from 'lucide-react';
+import { 
+  ArrowRight, 
+  ShieldCheck, 
+  Leaf, 
+  FlaskConical, 
+  Globe, 
+  Award, 
+  Users, 
+  CheckCircle2, 
+  Sparkles,
+  PhoneCall
+} from 'lucide-react';
 import { Link } from 'react-router-dom';
+import './Home.css';
 
 import aboutImg from '../assets/images/about-img-1.jpg';
 import whyImg from '../assets/images/why.webp';
@@ -16,32 +28,92 @@ import prod5 from '../assets/images/1713009112.webp';
 import prod6 from '../assets/images/1713009164.webp';
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 50 },
+  hidden: { opacity: 0, y: 40 },
   visible: (i = 0) => ({
     opacity: 1, y: 0,
-    transition: { duration: 0.7, delay: i * 0.12, ease: 'easeOut' }
+    transition: { duration: 0.6, delay: i * 0.1, ease: 'easeOut' }
   })
 };
 
 const fadeLeft = {
-  hidden: { opacity: 0, x: -60 },
-  visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease: 'easeOut' } }
+  hidden: { opacity: 0, x: -50 },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.7, ease: 'easeOut' } }
 };
 
 const fadeRight = {
-  hidden: { opacity: 0, x: 60 },
-  visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease: 'easeOut' } }
+  hidden: { opacity: 0, x: 50 },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.7, ease: 'easeOut' } }
 };
 
-const vp = { once: true, margin: '-80px' };
+const vp = { once: true, margin: '-60px' };
 
-const products = [
-  { img: prod1, tag: 'HERBICIDE', tagColor: 'var(--accent-emerald)', name: 'Black Label', chemical: 'Biscpyribac Sodium 10% SC', desc: 'Premium weed control solution for paddy and primary crops.' },
-  { img: prod2, tag: 'INSECTICIDE', tagColor: 'var(--accent-gold)', name: 'Khufia Fopronil 40%', chemical: 'Fipronil 40% SC', desc: 'Advanced broad-spectrum protection against chewing pests.' },
-  { img: prod3, tag: 'INSECTICIDE', tagColor: 'var(--accent-emerald)', name: 'Forodon 3G', chemical: 'Carbofuran 3% CG', desc: 'Premium soil insecticide for enhanced crop safety.' },
-  { img: prod4, tag: 'FUNGICIDE', tagColor: 'var(--accent-gold)', name: 'M-45 Mancozeb', chemical: 'Mancozeb 75% WP', desc: 'Broad-spectrum fungicide for disease-free crops.' },
-  { img: prod5, tag: 'PGR', tagColor: 'var(--accent-emerald)', name: 'Hanako Growth Promoter', chemical: 'Bio-stimulant Extract', desc: 'Boosts plant growth and improves overall yield quality.' },
-  { img: prod6, tag: 'FUNGICIDE', tagColor: 'var(--accent-gold)', name: 'Volvo Systemic', chemical: 'Hexaconazole 5% SC', desc: 'Systemic fungicide with long-lasting crop protection.' },
+const ALL_PRODUCTS = [
+  { 
+    id: 1,
+    img: prod1, 
+    tag: 'HERBICIDE', 
+    tagColor: '#10b981', 
+    tagBg: 'rgba(16,185,129,0.12)', 
+    name: 'Black Label', 
+    chemical: 'Biscpyribac Sodium 10% SC', 
+    desc: 'Premium post-emergence weed control solution specially formulated for paddy and primary cereal crops.',
+    highlight: 'Broad-Spectrum Action'
+  },
+  { 
+    id: 2,
+    img: prod2, 
+    tag: 'INSECTICIDE', 
+    tagColor: '#d4af37', 
+    tagBg: 'rgba(212,175,55,0.12)', 
+    name: 'Khufia Fopronil 40%', 
+    chemical: 'Fipronil 40% SC', 
+    desc: 'Advanced broad-spectrum protection against chewing pests, stem borers, and sucking insect complexes.',
+    highlight: 'Dual Mode of Action'
+  },
+  { 
+    id: 3,
+    img: prod3, 
+    tag: 'INSECTICIDE', 
+    tagColor: '#38bdf8', 
+    tagBg: 'rgba(56,189,248,0.12)', 
+    name: 'Forodon 3G', 
+    chemical: 'Carbofuran 3% CG', 
+    desc: 'Premium granular soil insecticide with systemic translocation for enhanced root and seedling safety.',
+    highlight: 'Root-Zone Shield'
+  },
+  { 
+    id: 4,
+    img: prod4, 
+    tag: 'FUNGICIDE', 
+    tagColor: '#f59e0b', 
+    tagBg: 'rgba(245,158,11,0.12)', 
+    name: 'M-45 Mancozeb', 
+    chemical: 'Mancozeb 75% WP', 
+    desc: 'Trusted contact fungicide with multi-site activity protecting vegetables, fruits, and field crops from blights.',
+    highlight: 'Zero Resistance Risk'
+  },
+  { 
+    id: 5,
+    img: prod5, 
+    tag: 'PGR', 
+    tagColor: '#34d399', 
+    tagBg: 'rgba(52,211,153,0.12)', 
+    name: 'Hanako Growth Promoter', 
+    chemical: 'Bio-stimulant Extract + Micro-nutrients', 
+    desc: 'Japanese bio-stimulant formulation boosting root proliferation, flowering retention, and overall harvest quality.',
+    highlight: 'Max Yield Booster'
+  },
+  { 
+    id: 6,
+    img: prod6, 
+    tag: 'FUNGICIDE', 
+    tagColor: '#d4af37', 
+    tagBg: 'rgba(212,175,55,0.12)', 
+    name: 'Volvo Systemic', 
+    chemical: 'Hexaconazole 5% SC', 
+    desc: 'Highly systemic triazole fungicide delivering curative, preventive, and eradicative protection against fungal pathogens.',
+    highlight: 'Long-Lasting Defense'
+  },
 ];
 
 const features = [
@@ -51,7 +123,22 @@ const features = [
   { icon: <Users size={28} />, title: '20,000+ Farmers', desc: 'Trusted by over 20,000 happy clients and farmers across India and beyond.' },
 ];
 
+const FILTER_TABS = [
+  { id: 'all', label: 'All Products' },
+  { id: 'HERBICIDE', label: 'Herbicides' },
+  { id: 'INSECTICIDE', label: 'Insecticides' },
+  { id: 'FUNGICIDE', label: 'Fungicides' },
+  { id: 'PGR', label: 'Plant Growth (PGR)' },
+];
+
 const Home = () => {
+  const [activeTab, setActiveTab] = useState('all');
+
+  const filteredProducts = useMemo(() => {
+    if (activeTab === 'all') return ALL_PRODUCTS;
+    return ALL_PRODUCTS.filter(p => p.tag === activeTab);
+  }, [activeTab]);
+
   return (
     <>
       <HeroSection />
@@ -144,150 +231,250 @@ const Home = () => {
 
       <ImpactCounters />
 
-      {/* Featured Products */}
-      <section className="section-padding" style={{ backgroundColor: 'var(--bg-dark)' }}>
+      {/* =========================================================================
+          3. FEATURED PRODUCTS SECTION (ELEVATED LUXURY UI)
+          ========================================================================= */}
+      <section className="featured-products-section">
         <div className="container">
           <motion.div
-            variants={fadeUp} initial="hidden" whileInView="visible" viewport={vp}
-            style={{ textAlign: 'center', marginBottom: '4rem' }}
+            variants={fadeUp} 
+            initial="hidden" 
+            whileInView="visible" 
+            viewport={vp}
+            className="featured-header-wrap"
           >
-            <h6 style={{ color: 'var(--accent-gold)', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '2px', marginBottom: '12px' }}>Our Products</h6>
-            <h2 className="h2">Featured Products</h2>
-            <p className="text-secondary" style={{ marginTop: '12px', maxWidth: '500px', margin: '12px auto 0' }}>
+            <span className="section-pill-badge">
+              <Sparkles size={14} /> SIGNATURE AGROCHEMICAL PORTFOLIO
+            </span>
+            <h2 className="h2" style={{ color: '#fff' }}>Featured Products</h2>
+            <p className="text-secondary" style={{ marginTop: '12px', fontSize: '1.05rem', lineHeight: '1.6' }}>
               Precision chemistry for maximum yield — trusted by farmers across 157+ countries.
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-3 gap-6">
-            {products.map((p, i) => (
-              <motion.div
-                key={i}
-                custom={i}
-                variants={fadeUp}
-                initial="hidden"
-                whileInView="visible"
-                viewport={vp}
-                whileHover={{ y: -10, boxShadow: '0 24px 48px rgba(0,0,0,0.5)' }}
-                style={{ background: 'var(--bg-card)', borderRadius: 'var(--radius-lg)', padding: '2rem', textAlign: 'center', border: '1px solid var(--border-color)', display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer' }}
+          {/* Interactive Category Filter Pills */}
+          <div className="featured-filter-tabs">
+            {FILTER_TABS.map(tab => (
+              <button
+                key={tab.id}
+                type="button"
+                className={`featured-tab-btn ${activeTab === tab.id ? 'active' : ''}`}
+                onClick={() => setActiveTab(tab.id)}
               >
-                <span style={{ background: 'rgba(212,175,55,0.1)', color: p.tagColor, padding: '4px 14px', borderRadius: 'var(--radius-full)', fontWeight: '700', letterSpacing: '1px', marginBottom: '1.5rem' }}>
-                  {p.tag}
-                </span>
-                <motion.img
-                  src={p.img}
-                  alt={p.name}
-                  whileHover={{ scale: 1.08 }}
-                  transition={{ duration: 0.4 }}
-                  style={{ height: '180px', objectFit: 'contain', marginBottom: '1.5rem' }}
-                />
-                <h3 className="h5" style={{ marginBottom: '6px' }}>{p.name}</h3>
-                <p style={{ color: 'var(--accent-gold)', marginBottom: '12px', fontWeight: '600' }}>{p.chemical}</p>
-                <p className="text-secondary" style={{ marginBottom: '1.5rem', flexGrow: 1, lineHeight: '1.6' }}>{p.desc}</p>
-                <Link to="/products" className="btn btn-outline-gold" style={{ width: '100%' }}>View Product</Link>
-              </motion.div>
+                {tab.label}
+              </button>
             ))}
           </div>
 
+          {/* Products Grid */}
+          <motion.div 
+            layout
+            className="featured-cards-grid"
+          >
+            <AnimatePresence mode="popLayout">
+              {filteredProducts.map((p, i) => (
+                <motion.div
+                  key={p.id}
+                  layout
+                  custom={i}
+                  variants={fadeUp}
+                  initial="hidden"
+                  whileInView="visible"
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  viewport={vp}
+                  className="luxury-product-card"
+                >
+                  {/* Top Bar Tags */}
+                  <div className="card-header-tags">
+                    <span 
+                      className="category-tag-pill" 
+                      style={{ 
+                        backgroundColor: p.tagBg, 
+                        color: p.tagColor,
+                        borderColor: `${p.tagColor}50`
+                      }}
+                    >
+                      {p.tag}
+                    </span>
+                    <span className="jp-tech-tag">🇯🇵 JAPAN TECH</span>
+                  </div>
+
+                  {/* Studio White Pedestal Image */}
+                  <div className="card-image-pedestal">
+                    <img
+                      src={p.img}
+                      alt={p.name}
+                      className="card-product-img"
+                      loading="lazy"
+                    />
+                  </div>
+
+                  {/* Product Details */}
+                  <div className="card-content-body">
+                    <h3 className="card-product-title">{p.name}</h3>
+                    
+                    <div className="card-chemical-pill">
+                      <FlaskConical size={14} />
+                      <span>{p.chemical}</span>
+                    </div>
+
+                    <p className="card-product-desc">{p.desc}</p>
+
+                    <Link to="/products" className="card-action-btn">
+                      <span>View Product</span>
+                      <ArrowRight size={16} />
+                    </Link>
+                  </div>
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </motion.div>
+
           <motion.div
-            variants={fadeUp} initial="hidden" whileInView="visible" viewport={vp}
+            variants={fadeUp} 
+            initial="hidden" 
+            whileInView="visible" 
+            viewport={vp}
             style={{ textAlign: 'center', marginTop: '4rem' }}
           >
-            <Link to="/products" className="btn btn-gold">
-              View All Products <ArrowRight size={18} style={{ marginLeft: '8px' }} />
+            <Link to="/products" className="btn-cta-gold">
+              View All Products <ArrowRight size={18} style={{ marginLeft: '10px' }} />
             </Link>
           </motion.div>
         </div>
       </section>
 
-      {/* Why Choose Us */}
-      <section className="section-padding" style={{ backgroundColor: 'var(--bg-card)', borderTop: '1px solid var(--border-color)' }}>
+      {/* =========================================================================
+          4. WHY CHOOSE US & CTA BANNER SECTION (ELEVATED MODERN UI)
+          ========================================================================= */}
+      <section className="why-choose-luxury-section">
         <div className="container">
-          <div className="grid grid-cols-2 gap-8 items-center">
-            <motion.div variants={fadeLeft} initial="hidden" whileInView="visible" viewport={vp}>
-              <h6 style={{ color: 'var(--accent-gold)', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '2px', marginBottom: '12px' }}>Why Choose Us</h6>
-              <h2 className="h2" style={{ marginBottom: '32px' }}>Pioneering Excellence in Agrochemicals</h2>
+          <div className="why-choose-grid">
+            {/* Left Column: Feature Highlights */}
+            <motion.div variants={fadeLeft} initial="hidden" whileInView="visible" viewport={vp} className="why-left-content">
+              <span className="section-pill-badge" style={{ alignSelf: 'flex-start' }}>
+                <Leaf size={14} /> WHY CHOOSE SHIMANZU
+              </span>
+              <h2 className="h2 why-section-title">
+                Pioneering Excellence in Agrochemicals
+              </h2>
 
-              {[
-                { icon: <ShieldCheck size={24} />, color: 'var(--accent-gold)', bg: 'rgba(212,175,55,0.1)', title: 'Quality Assurance', desc: 'ISO 9001:2015 & 14001:2015 certified processes ensuring world-class standards in every product.' },
-                { icon: <Leaf size={24} />, color: 'var(--accent-emerald)', bg: 'rgba(16,185,129,0.1)', title: 'Eco-Friendly Solutions', desc: 'Sustainable agrochemical products designed to protect the environment while maximizing crop yield.' },
-                { icon: <FlaskConical size={24} />, color: 'var(--accent-gold)', bg: 'rgba(212,175,55,0.1)', title: 'Japanese Technology', desc: 'Advanced Japanese R&D and manufacturing technology for superior product efficacy and safety.' },
-              ].map((item, i) => (
-                <motion.div
-                  key={i}
-                  custom={i}
-                  variants={fadeUp}
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={vp}
-                  style={{ display: 'flex', gap: '16px', marginBottom: '28px' }}
-                >
+              <div className="why-features-stack">
+                {[
+                  { 
+                    icon: <ShieldCheck size={26} />, 
+                    color: 'var(--accent-gold)', 
+                    bg: 'rgba(212,175,55,0.15)', 
+                    title: 'Quality Assurance', 
+                    desc: 'ISO 9001:2015 & 14001:2015 certified processes ensuring world-class purity, strict QA batches, and international efficacy standards.' 
+                  },
+                  { 
+                    icon: <Leaf size={26} />, 
+                    color: 'var(--accent-emerald)', 
+                    bg: 'rgba(16,185,129,0.15)', 
+                    title: 'Eco-Friendly Formulations', 
+                    desc: 'Sustainable, crop-safe agrochemicals designed to minimize environmental impact while maximizing yield output.' 
+                  },
+                  { 
+                    icon: <FlaskConical size={26} />, 
+                    color: 'var(--accent-gold)', 
+                    bg: 'rgba(212,175,55,0.15)', 
+                    title: 'Japanese Technology', 
+                    desc: 'Advanced Japanese molecular testing & formulations (EC, SC, WG) providing rapid absorption and prolonged crop protection.' 
+                  },
+                ].map((item, i) => (
                   <motion.div
-                    whileHover={{ scale: 1.15, rotate: 5 }}
-                    style={{ background: item.bg, color: item.color, padding: '14px', borderRadius: '50%', height: 'fit-content', flexShrink: 0 }}
+                    key={i}
+                    custom={i}
+                    variants={fadeUp}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={vp}
+                    className="why-feature-card"
                   >
-                    {item.icon}
+                    <div className="feature-icon-pod" style={{ background: item.bg, color: item.color }}>
+                      {item.icon}
+                    </div>
+                    <div className="feature-info-wrap">
+                      <h4 className="feature-card-heading">{item.title}</h4>
+                      <p className="feature-card-desc">{item.desc}</p>
+                    </div>
                   </motion.div>
-                  <div>
-                    <h4 className="h5" style={{ marginBottom: '6px' }}>{item.title}</h4>
-                    <p className="text-secondary" style={{ lineHeight: '1.7' }}>{item.desc}</p>
-                  </div>
-                </motion.div>
-              ))}
+                ))}
+              </div>
             </motion.div>
 
-            <motion.div variants={fadeRight} initial="hidden" whileInView="visible" viewport={vp} style={{ overflow: 'hidden', borderRadius: 'var(--radius-lg)' }}>
-              <motion.img
-                src={whyImg}
-                alt="Why Shimanzu"
-                whileHover={{ scale: 1.04 }}
-                transition={{ duration: 0.5 }}
-                style={{ borderRadius: 'var(--radius-lg)', width: '100%', border: '1px solid var(--border-color)', display: 'block' }}
-              />
+            {/* Right Column: Hero Visual with Overlapping Stat Cards */}
+            <motion.div variants={fadeRight} initial="hidden" whileInView="visible" viewport={vp} className="why-right-visual">
+              <div className="why-image-frame">
+                <img
+                  src={whyImg}
+                  alt="Modern Agriculture with Shimanzu"
+                  className="why-hero-photo"
+                />
+              </div>
+
+              {/* Floating Stat Badge 1 (Top Left) */}
+              <div className="floating-stat-badge badge-top-left">
+                <div className="badge-stat-icon" style={{ background: 'rgba(212,175,55,0.2)', color: 'var(--accent-gold)' }}>
+                  <Award size={22} />
+                </div>
+                <div>
+                  <div className="badge-stat-label">ISO 9001:2015</div>
+                  <div className="badge-stat-sub">Certified Labs</div>
+                </div>
+              </div>
+
+              {/* Floating Stat Badge 2 (Bottom Right) */}
+              <div className="floating-stat-badge badge-bottom-right">
+                <div className="badge-stat-icon" style={{ background: 'rgba(16,185,129,0.2)', color: '#34d399' }}>
+                  <Users size={22} />
+                </div>
+                <div>
+                  <div className="badge-stat-label">20,000+ Farmers</div>
+                  <div className="badge-stat-sub">157+ Export Countries</div>
+                </div>
+              </div>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* CTA Banner */}
-      <motion.section
-        initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={vp}
-        transition={{ duration: 0.8 }}
-        style={{
-          background: 'linear-gradient(135deg, #8B0000 0%, #3a0000 50%, #1a0a00 100%)',
-          padding: '80px 0', textAlign: 'center', position: 'relative', overflow: 'hidden'
-        }}
-      >
-        <motion.div
-          animate={{ scale: [1, 1.3, 1], opacity: [0.1, 0.2, 0.1] }}
-          transition={{ duration: 4, repeat: Infinity }}
-          style={{ position: 'absolute', width: '500px', height: '500px', borderRadius: '50%', background: 'rgba(255,215,0,0.08)', top: '-150px', right: '-100px' }}
-        />
-        <div className="container" style={{ position: 'relative', zIndex: 1 }}>
-          <motion.h2
-            className="h2"
-            initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={vp}
-            transition={{ delay: 0.1 }}
-            style={{ color: '#fff', marginBottom: '16px' }}
-          >
-            Ready to Grow with Shimanzu?
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={vp}
-            transition={{ delay: 0.2 }}
-            style={{ color: 'rgba(255,255,255,0.75)', marginBottom: '36px' }}
-          >
-            Join 20,000+ farmers who trust Shimanzu for quality agrochemical solutions.
-          </motion.p>
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={vp}
-            transition={{ delay: 0.3 }}
-            style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap' }}
-          >
-            <Link to="/products" className="btn btn-gold">Explore Products <ArrowRight size={16} style={{ marginLeft: '8px' }} /></Link>
-            <Link to="/contact" className="btn" style={{ border: '1px solid rgba(255,255,255,0.4)', color: '#fff', background: 'transparent' }}>Contact Us</Link>
-          </motion.div>
+      {/* =========================================================================
+          CTA BANNER SECTION (LUXURY EMERALD & GOLD)
+          ========================================================================= */}
+      <section className="luxury-cta-section">
+        <div className="cta-glow-orb"></div>
+        <div className="container">
+          <div className="cta-content-container">
+            <motion.div
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={vp}
+            >
+              <span className="cta-badge-pill">
+                <Sparkles size={14} /> READY TO GROW WITH SHIMANZU?
+              </span>
+              <h2 className="cta-main-title">
+                Elevate Your Farm Productivity With Japanese Agrochemicals
+              </h2>
+              <p className="cta-main-desc">
+                Join over 20,000+ satisfied farmers and distributors worldwide who rely on Shimanzu formulations for superior pest defense and harvest quality.
+              </p>
+              <div className="cta-buttons-wrap">
+                <Link to="/products" className="btn-cta-gold">
+                  Explore Products <ArrowRight size={18} style={{ marginLeft: '8px' }} />
+                </Link>
+                <Link to="/contact" className="btn-cta-outline">
+                  <PhoneCall size={18} style={{ marginRight: '8px' }} />
+                  Contact Us
+                </Link>
+              </div>
+            </motion.div>
+          </div>
         </div>
-      </motion.section>
+      </section>
     </>
   );
 };

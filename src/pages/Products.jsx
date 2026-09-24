@@ -1,164 +1,215 @@
-import React, { useState } from 'react';
-import FilterBar from '../components/FilterBar';
+import React, { useState, useMemo, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { ArrowLeft } from 'lucide-react';
+import ProductCategoriesGrid from '../components/ProductCategoriesGrid';
 import ProductCard from '../components/ProductCard';
+import FilterSidebar from '../components/FilterSidebar';
 import QuickViewModal from '../components/QuickViewModal';
-import { motion } from 'framer-motion';
-
-import img1 from '../assets/images/1713008833.webp';
-import img2 from '../assets/images/1713008853.webp';
-import img3 from '../assets/images/1713009018.webp';
-import img4 from '../assets/images/1713009051.webp';
-import img5 from '../assets/images/1713009112.webp';
-import img6 from '../assets/images/1713009164.webp';
+import { useDataContext } from '../context/DataContext';
+import './Products.css';
 
 const Products = () => {
-  const [filter, setFilter] = useState({ search: '', category: 'All', formulation: 'All' });
+  const { categories: CATEGORIES, products: PRODUCTS } = useDataContext();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const categoryParam = searchParams.get('category');
+
+  // Active Category (default 'all' shows the categories grid)
+  const [selectedCategory, setSelectedCategory] = useState(categoryParam || 'all');
+  const [selectedFormulations, setSelectedFormulations] = useState([]);
+  const [selectedCrops, setSelectedCrops] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
 
-  // Sample data simulating a real catalog
-  const products = [
-    {
-      id: 1,
-      name: 'M-45 Mancozeb 75% WP',
-      chemical: 'Mancozeb 75% WP',
-      category: 'Fungicide',
-      formulation: 'WP',
-      inStock: true,
-      packSizes: ['500g', '1kg', '5kg'],
-      crops: ['Potato', 'Tomato', 'Grapes', 'Apple'],
-      imgSrc: img1
-    },
-    {
-      id: 2,
-      name: 'Khufia Fopronil 40%',
-      chemical: 'Fipronil 40% SC',
-      category: 'Insecticide',
-      formulation: 'SC',
-      inStock: true,
-      packSizes: ['250ml', '500ml', '1L'],
-      crops: ['Cotton', 'Paddy', 'Chilli'],
-      imgSrc: img2
-    },
-    {
-      id: 3,
-      name: 'Black Label',
-      chemical: 'Pretilachlor 50% EC',
-      category: 'Herbicide',
-      formulation: 'EC',
-      inStock: false,
-      packSizes: ['500ml', '1L', '5L'],
-      crops: ['Paddy'],
-      imgSrc: img3
-    },
-    {
-      id: 4,
-      name: 'Hanako Growth Promoter',
-      chemical: 'Bio-stimulant Extract',
-      category: 'PGR',
-      formulation: 'SL',
-      inStock: true,
-      packSizes: ['100ml', '250ml', '500ml'],
-      crops: ['All Crops', 'Vegetables', 'Fruits'],
-      imgSrc: img4
-    },
-    {
-      id: 5,
-      name: 'Volvo Systemic',
-      chemical: 'Hexaconazole 5% SC',
-      category: 'Fungicide',
-      formulation: 'SC',
-      inStock: true,
-      packSizes: ['250ml', '500ml', '1L'],
-      crops: ['Mango', 'Rice', 'Groundnut'],
-      imgSrc: img5
-    },
-    {
-      id: 6,
-      name: 'Forodon 3G',
-      chemical: 'Carbofuran 3% CG',
-      category: 'Insecticide',
-      formulation: 'GR',
-      inStock: true,
-      packSizes: ['1kg', '5kg', '10kg'],
-      crops: ['Sugarcane', 'Maize', 'Paddy'],
-      imgSrc: img6
+  // Sync state with URL params
+  useEffect(() => {
+    if (categoryParam) {
+      const exists = CATEGORIES.some(c => c.id === categoryParam);
+      setSelectedCategory(exists ? categoryParam : 'all');
+    } else {
+      setSelectedCategory('all');
     }
-  ];
+  }, [categoryParam]);
 
-  const handleFilterChange = (type, value) => {
-    setFilter(prev => ({ ...prev, [type]: value }));
+  const handleSelectCategory = (catId) => {
+    setSelectedCategory(catId);
+    setSelectedFormulations([]);
+    setSelectedCrops([]);
+    if (catId === 'all') {
+      searchParams.delete('category');
+      setSearchParams(searchParams);
+    } else {
+      setSearchParams({ category: catId });
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const filteredProducts = products.filter(product => {
-    const matchSearch = product.name.toLowerCase().includes(filter.search.toLowerCase()) || 
-                        product.chemical.toLowerCase().includes(filter.search.toLowerCase());
-    const matchCategory = filter.category === 'All' || product.category === filter.category;
-    const matchFormulation = filter.formulation === 'All' || product.formulation === filter.formulation;
-    
-    return matchSearch && matchCategory && matchFormulation;
-  });
+  const handleBackToAllCategories = () => {
+    setSelectedCategory('all');
+    setSelectedFormulations([]);
+    setSelectedCrops([]);
+    searchParams.delete('category');
+    setSearchParams(searchParams);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const activeCategoryData = useMemo(() => {
+    return CATEGORIES.find(c => c.id === selectedCategory) || null;
+  }, [selectedCategory]);
+
+  const toggleFormulation = (form) => {
+    setSelectedFormulations(prev => 
+      prev.includes(form) ? prev.filter(f => f !== form) : [...prev, form]
+    );
+  };
+
+  const toggleCrop = (crop) => {
+    setSelectedCrops(prev => 
+      prev.includes(crop) ? prev.filter(c => c !== crop) : [...prev, crop]
+    );
+  };
+
+  const resetFilters = () => {
+    setSelectedFormulations([]);
+    setSelectedCrops([]);
+  };
+
+  // Available formulations for current scope
+  const availableFormulations = useMemo(() => {
+    const list = PRODUCTS
+      .filter(p => selectedCategory === 'all' || p.category === selectedCategory)
+      .map(p => p.formulation);
+    return Array.from(new Set(list)).filter(Boolean).sort();
+  }, [selectedCategory]);
+
+  // Available crops
+  const availableCrops = useMemo(() => {
+    const set = new Set();
+    PRODUCTS
+      .filter(p => selectedCategory === 'all' || p.category === selectedCategory)
+      .forEach(p => (p.crops || []).forEach(c => set.add(c)));
+    return Array.from(set).sort();
+  }, [selectedCategory]);
+
+  // Filtered products list
+  const filteredProducts = useMemo(() => {
+    return PRODUCTS.filter(product => {
+      // Category match
+      const matchCat = selectedCategory === 'all' || product.category === selectedCategory;
+
+      // Formulation match
+      const matchForm = selectedFormulations.length === 0 || 
+        selectedFormulations.includes(product.formulation);
+
+      // Crop match
+      const matchCrop = selectedCrops.length === 0 || 
+        (product.crops && product.crops.some(c => selectedCrops.includes(c)));
+
+      return matchCat && matchForm && matchCrop;
+    });
+  }, [selectedCategory, selectedFormulations, selectedCrops]);
+
+  const hasActiveFilters = selectedFormulations.length > 0 || selectedCrops.length > 0;
 
   return (
-    <div style={{ backgroundColor: 'var(--bg-dark)', minHeight: '100vh' }}>
-      {/* Page Header */}
-      <div style={{ backgroundColor: 'var(--bg-card)', padding: '60px 0', borderBottom: '1px solid var(--border-color)', textAlign: 'center' }}>
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="container"
-        >
-          <h1 className="h2" style={{ color: 'var(--text-primary)', marginBottom: '16px' }}>Our Product Catalog</h1>
-          <p className="text-secondary">Precision chemistry for maximum yield.</p>
-        </motion.div>
-      </div>
+    <div className="fmc-products-page">
+      {/* 
+        Case 1: When user is viewing All Categories, 
+        show ONLY the exact PRODUCT CATEGORIES grid!
+      */}
+      {selectedCategory === 'all' && (
+        <ProductCategoriesGrid 
+          selectedCategoryId={selectedCategory} 
+          onSelectCategory={handleSelectCategory} 
+        />
+      )}
 
-      <section className="section-padding">
-        <div className="container">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <FilterBar currentFilter={filter} onFilterChange={handleFilterChange} />
-          </motion.div>
-          
-          <div className="grid grid-cols-3 gap-6">
-            {filteredProducts.map((product, idx) => (
-              <motion.div 
-                key={product.id}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.4, delay: idx * 0.1 }}
-              >
-                <ProductCard product={product} onViewClick={setSelectedProduct} />
-              </motion.div>
-            ))}
-          </div>
+      {/* 
+        Case 2: When a specific category is selected (e.g. Harvest Aids),
+        render the EXACT layout from Image 2 (no dark green banner, clean white layout)!
+      */}
+      {selectedCategory !== 'all' && activeCategoryData && (
+        <>
+          {/* Header section matching Image 2 */}
+          <section className="fmc-type-header-section">
+            <div className="container">
+              <div className="fmc-type-nav-bar">
+                <div className="fmc-product-type-label-wrap">
+                  <span className="fmc-product-type-label">PRODUCT TYPE</span>
+                  <div className="fmc-product-type-line" />
+                </div>
+                <button 
+                  className="fmc-back-btn" 
+                  onClick={handleBackToAllCategories}
+                >
+                  <ArrowLeft size={14} /> All Categories
+                </button>
+              </div>
 
-          {filteredProducts.length === 0 && (
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              style={{ textAlign: 'center', padding: '4rem 0', color: 'var(--text-muted)' }}
-            >
-              <h3 className="h4" style={{ marginBottom: '1rem' }}>No products found</h3>
-              <p>Try adjusting your search or filters.</p>
-              <button 
-                className="btn btn-outline-gold" 
-                style={{ marginTop: '1rem' }}
-                onClick={() => setFilter({ search: '', category: 'All', formulation: 'All' })}
-              >
-                Clear Filters
-              </button>
-            </motion.div>
-          )}
-        </div>
-      </section>
+              <h1 className="fmc-type-title">{activeCategoryData.shortName || activeCategoryData.name}</h1>
+              <p className="fmc-type-subtitle">{activeCategoryData.description}</p>
+            </div>
+          </section>
 
+          {/* Main 2-column layout matching Image 2 */}
+          <section className="fmc-main-layout">
+            <div className="container">
+              <div className="fmc-layout-columns">
+                {/* Left Filter Sidebar */}
+                <FilterSidebar 
+                  categories={CATEGORIES}
+                  selectedCategory={selectedCategory}
+                  onSelectCategory={handleSelectCategory}
+                  formulations={availableFormulations}
+                  selectedFormulations={selectedFormulations}
+                  onToggleFormulation={toggleFormulation}
+                  crops={availableCrops}
+                  selectedCrops={selectedCrops}
+                  onToggleCrop={toggleCrop}
+                  onResetFilters={resetFilters}
+                  hasActiveFilters={hasActiveFilters}
+                />
+
+                {/* Right Results Area */}
+                <div className="fmc-results-area">
+                  <div className="fmc-results-counter">
+                    DISPLAYING 1-{filteredProducts.length} OF {filteredProducts.length} RESULTS
+                  </div>
+
+                  {filteredProducts.length > 0 ? (
+                    <div className="fmc-grid-3col">
+                      {filteredProducts.map(product => (
+                        <ProductCard 
+                          key={product.id}
+                          product={product}
+                          onViewClick={setSelectedProduct}
+                        />
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="fmc-empty-box">
+                      <h3 className="fmc-empty-title">No products match this filter</h3>
+                      <p>Try clearing some filters on the left.</p>
+                      <button 
+                        className="fmc-back-btn" 
+                        style={{ marginTop: '14px' }}
+                        onClick={resetFilters}
+                      >
+                        Reset Filters
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </section>
+        </>
+      )}
+
+      {/* Quick View Modal */}
       {selectedProduct && (
-        <QuickViewModal product={selectedProduct} onClose={() => setSelectedProduct(null)} />
+        <QuickViewModal 
+          product={selectedProduct} 
+          onClose={() => setSelectedProduct(null)} 
+        />
       )}
     </div>
   );

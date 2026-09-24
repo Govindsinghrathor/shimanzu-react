@@ -30,6 +30,7 @@ const Navbar = () => {
     { name: 'Home', path: '/' },
     { name: 'About', path: '/about' },
     { name: 'Products', path: '/products' },
+    { name: 'Crops', path: '/crops' },
     { name: 'Gallery', path: '/gallery' },
     { name: 'Blog', path: '/blog' },
     { name: 'Contact', path: '/contact' }
@@ -65,7 +66,7 @@ const Navbar = () => {
           <button className="action-btn" aria-label="Cart">
             <ShoppingCart size={20} />
           </button>
-          <Link to="/contact" className="btn btn-outline-gold" style={{ padding: '8px 20px', fontSize: '0.85rem' }}>
+          <Link to="/contact" className="btn btn-outline-gold" style={{ padding: '8px 16px', fontSize: '0.85rem' }}>
             Get Quote
           </Link>
         </div>

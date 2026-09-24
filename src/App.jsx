@@ -8,9 +8,12 @@ import Footer from './components/Footer';
 import Home from './pages/Home';
 import About from './pages/About';
 import Products from './pages/Products';
+import Crops from './pages/Crops';
 import Gallery from './pages/Gallery';
 import Blog from './pages/Blog';
 import Contact from './pages/Contact';
+import Admin from './pages/Admin';
+import { DataProvider } from './context/DataContext';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -35,9 +38,11 @@ function AnimatedRoutes() {
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/products" element={<Products />} />
+          <Route path="/crops" element={<Crops />} />
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/admin" element={<Admin />} />
         </Routes>
       </motion.div>
     </AnimatePresence>
@@ -46,18 +51,20 @@ function AnimatedRoutes() {
 
 function App() {
   return (
-    <Router>
-      <LoadingScreen />
-      <ScrollToTop />
-      <CustomCursor />
-      <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-        <Navbar />
-        <main style={{ flexGrow: 1 }}>
-          <AnimatedRoutes />
-        </main>
-        <Footer />
-      </div>
-    </Router>
+    <DataProvider>
+      <Router>
+        <LoadingScreen />
+        <ScrollToTop />
+        <CustomCursor />
+        <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+          <Navbar />
+          <main style={{ flexGrow: 1 }}>
+            <AnimatedRoutes />
+          </main>
+          <Footer />
+        </div>
+      </Router>
+    </DataProvider>
   );
 }
 
