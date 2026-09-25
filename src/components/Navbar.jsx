@@ -48,8 +48,8 @@ const Navbar = () => {
         {/* Desktop Navigation */}
         <nav className="navbar-links desktop-only">
           {navLinks.map((link) => (
-            <Link 
-              key={link.name} 
+            <Link
+              key={link.name}
               to={link.path}
               className={`nav-link ${location.pathname === link.path ? 'active' : ''}`}
             >
@@ -72,7 +72,7 @@ const Navbar = () => {
         </div>
 
         {/* Mobile Menu Toggle */}
-        <button 
+        <button
           className="mobile-menu-btn"
           onClick={() => setIsOpen(!isOpen)}
           aria-label="Toggle menu"
@@ -86,8 +86,8 @@ const Navbar = () => {
         <div className="container">
           <nav className="mobile-links">
             {navLinks.map((link) => (
-              <Link 
-                key={link.name} 
+              <Link
+                key={link.name}
                 to={link.path}
                 className={`mobile-nav-link ${location.pathname === link.path ? 'active' : ''}`}
               >
@@ -95,7 +95,7 @@ const Navbar = () => {
               </Link>
             ))}
           </nav>
-          
+
           <div className="mobile-actions">
             <Link to="/contact" className="btn btn-gold" style={{ width: '100%', marginTop: '1rem' }}>
               Get a Quote
